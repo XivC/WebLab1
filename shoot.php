@@ -10,16 +10,7 @@ function calculate_shoot($x, $y, $r)
     return $isHit;
 }
 
-function csv_to_array($path)
-{
-    $file = fopen($path, 'r');
-    $arr = array();
-    while ($row_data = fgetcsv($file, 1000, ",")) {
-        array_push($row_data);
-    }
-    fclose($file);
-    return $arr;
-}
+
 
 function array_to_csv($path, $arr)
 {
