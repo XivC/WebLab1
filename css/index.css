@@ -1,0 +1,40 @@
+.header{
+    font-family: fantasy;
+    font-size: 15px;
+    color: darkblue;
+    text-align: center;
+}
+
+.shoot_form{
+    text-align: center;
+    margin-top: 100px;
+
+}
+
+#shoot_form{
+    display: inline-block;
+    font-size: 15px;
+    font-family: fantasy;
+
+}
+
+input[type="text"], select{
+    width: 60px;
+}
+
+#shoot_form td{
+    padding: 10px;
+}
+
+#r_checkbox_table td{
+    padding: 1px;
+}
+
+h1::first-line{
+    margin: auto;
+
+}
+h1:hover{
+    transition: 2s;
+    transform: scale(1.5);
+}
