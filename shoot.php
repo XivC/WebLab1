@@ -1,110 +1,23 @@
 <?php
-
-
-function calculate_shoot($x, $y, $r)
-{
-    $isHit = false;
-    if ($x <= 0 and $x >= -$r and $y >= 0 and 2 * $y <= $r) $isHit = true;
-    else if (($x <= 0 and $y <= 0) and ($x * $x + $y * $y <= $r * $r)) $isHit = true;
-    else if (($x >= 0 and $y <= 0) and (2 * $y - $x >= -2 * $r)) $isHit = true;
-    return $isHit;
+if(!isset($_SESSION)) {
+    session_start();
 }
-
-
-
-function array_to_csv($path, $arr)
-{
-    $file = fopen($path, 'w+');
-    foreach ($arr as $row) {
-        fputcsv($file, $row);
-    }
-    fclose($file);
-}
-
-
+require 'shoot_utils.php';
+require 'json_utils.php';
 $time_start = $_SERVER["REQUEST_TIME_FLOAT"];
-$x = (float)$_POST["x_selection"];
-$y = (float)$_POST["y_input"];
-$r = (float)$_POST['r_checkbox'];
+$x = (float)$_POST["x"];
+$y = (float)$_POST["y"];
+$r = (float)$_POST['r'];
 
 
 date_default_timezone_set('Europe/Moscow');
-$isHit = calculate_shoot($x, $y, $r);
-
-$results = array_map("str_getcsv", file("results.csv"));
+$isHit = calculate_shoot($x, $y, $r) ? "true" : "false";
+$results = get_shoot_results();
 array_push($results, array($x, $y, $r, $isHit));
-array_to_csv("results.csv", $results);
-$results = array_reverse($results);
 $current_time = floatval(time()) + floatval(microtime());
 $script_time = $current_time - $time_start;
 $time_start_f = date("Y-m-d H:i:s", $time_start);
-
-?>
-
-<html lang="en">
-
-
-<head>
-    <title>Результаты выстрелов</title>
-    <meta charset="UTF-8">
-    <style>
-        <?php include "css/shoot.css" ?>
-    </style>
-</head>
-<body>
-
-<?php
-echo "<p >Время начала исполнения скрипта: $time_start_f</p>";
-echo "<p>Время работы скрипта: $script_time мс.</p>";
-?>
-<table id="hits_table">
-    <tr class="header">
-        <td>
-            x
-        </td>
-        <td class="header">
-            y
-        </td>
-        <td class="header">
-            r
-        </td>
-        <td class="header">
-            result
-        </td>
-    </tr>
-    <?php
-    foreach ($results as $result) {
-        $hitText = "";
-        $hitClass = "";
-        if ($result[3]) {$hitText = "Попадание"; $hitClass = "hit";}
-        else {$hitText = "Промах"; $hitClass = "miss";}
-
-
-        echo "<tr class='content'>";
-        echo "
-                <td>
-                $result[0]
-            </td>
-            <td>
-                $result[1]
-            </td>
-            <td>
-                $result[2]
-            </td>
-            <td class = $hitClass>
-                $hitText
-            </td>
-            ";
-        echo "</tr>";
-    }
-    ?>
-</table>
-</body>
-
-</html>
-
-
-
-
-
+header('Content-Type: application/json; charset=utf-8');
+add_shoot_result($x, $y, $r, $isHit);
+echo encode_json($x, $y, $r, $isHit, $time_start_f, $script_time, $_SESSION["results"]  );
 

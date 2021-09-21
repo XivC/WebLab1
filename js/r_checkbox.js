@@ -5,10 +5,19 @@ function r_checkbox_click(id){
 
         if (checkboxes[i].id !== id) {
             checkboxes[i].checked = false
-        }
-        else {
-            r = i
+
         }
 
     }
+    render_canvas(get_r())
+}
+
+function get_r(){
+    let r = 0
+    document.getElementsByName("r_checkbox").forEach(checkbox => {
+        if (checkbox.checked) {
+            r = checkbox.value
+        }
+})
+    return r
 }

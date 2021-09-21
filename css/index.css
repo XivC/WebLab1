@@ -7,7 +7,7 @@
 
 .shoot_form{
     text-align: center;
-    margin-top: 100px;
+    margin-top: 10px;
 
 }
 
@@ -38,3 +38,24 @@ h1:hover{
     transition: 2s;
     transform: scale(1.5);
 }
+
+#image{
+
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+p{
+    text-align: center;
+}
+#last_hit_result{
+    font-family: fantasy;
+    font-size: large;
+}
+#last_hit_result[class="hit"]{
+    color: green;
+}
+#last_hit_result[class="miss"]{
+    color:red;
+}
+canvas { border: 1px solid black; }
