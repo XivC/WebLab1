@@ -23,7 +23,24 @@ function check_r() {
     return isChecked
 }
 
+function shoot_request(x, y, r){
+    let request = new XMLHttpRequest();
+    let formData = new FormData()
+    formData.append("x", x);
+    formData.append("y", y);
+    formData.append("r", r);
+    request.open('post', "shoot.php", true)
+    request.overrideMimeType("application/json");
+    request.onload = function () {
+        console.log(request.responseText)
+        let json = JSON.parse(request.responseText)
+        render_canvas(r, json)
+        render_table(json)
+        show_last_hit_results(json)
+    }
+    request.send(formData)
 
+}
 function shoot() {
 
     let x = document.getElementById("x_selection").value
@@ -37,21 +54,8 @@ function shoot() {
         alert("Введённые данные выходят за допустимые пределы");
         return
     }
-    let request = new XMLHttpRequest();
-    let formData = new FormData()
-    formData.append("x", x);
-    formData.append("y", y);
-    formData.append("r", r);
-    request.open('post', "shoot.php", true)
-    request.overrideMimeType("application/json");
-    request.onload = function () {
-        console.log(request.responseText)
-        let json = JSON.parse(request.responseText)
-        render_table(json)
-        show_last_hit_results(json)
-        console.log(json);
+    shoot_request(x,y, r)
 
-    }
-    request.send(formData)
+
 
 }

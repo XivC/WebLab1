@@ -1,3 +1,5 @@
+let last_table = null;
+
 function render_table(json) {
 
     console.log(json)

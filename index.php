@@ -10,7 +10,7 @@ if (!isset($_SESSION)){
     <title>Лаба один по вебу</title>
     <link rel="stylesheet" href="css/index.css">
 </head>
-<body onload="get_table().then(json => render_table(json)); render_canvas(0)">
+<body onload="get_table().then(json => render_table(json)); canvas_init()">
 <div class ="header">
 <h1>
     Дыбов Артём Денисович
@@ -96,7 +96,7 @@ if (!isset($_SESSION)){
                     </tr>
                     <tr>
                         <td>
-                            <lagetbel for="r_checkbox_5">3</lagetbel>
+                            <label for="r_checkbox_5">3</label>
                         </td>
                         <td>
                             <input type="checkbox" name="r_checkbox" id="r_checkbox_5" value="3" onclick=r_checkbox_click(id)>
